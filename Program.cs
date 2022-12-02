@@ -1,18 +1,26 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Estudiantes20111179.Data.Models;
+using Estudiantes20111179.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddqSlite("Data Source=.//Data//Context//MyDb.sqlite"); 
+builder.Services.AddSqlite<MyDbContext>("Data Source=.//Data//Context//MyDb.sqlite");
 builder.Services.AddScoped<IMyDbContext,MyDbContext>();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
-
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+    if (db.Database.EnsureCreated())
+    {
+       
+    }
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -30,16 +38,6 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 {
-var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-using (var scope = scopeFactory.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<LP3DbContext>();
-    if (db.Database.EnsureCreated())
-    {
-        
-    }
-}
-
 }
 
 app.Run();
