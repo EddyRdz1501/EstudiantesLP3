@@ -2,9 +2,9 @@ using Estudiantes20111179.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Estudiantes20111179.Data.Context;
-public class Estudiantes20111179:MyDbContext,IMyDbContext
+public class MyDbContext:DbContext,IMyDbContext
 {
-    public LP3DbContext(DbContextOptions options):base(options)
+    public MyDbContext(DbContextOptions options):base(options)
     {
         
     }

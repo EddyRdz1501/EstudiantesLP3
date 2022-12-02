@@ -5,6 +5,7 @@ namespace Estudiantes20111179.Data.Models;
 public class Estudiantes
 {
     
+[Key]
 public int estudianteID  {get; set;}
 public string Nombres  {get; set;}= null!;
 public string Apellidos  {get; set;}= null!;
